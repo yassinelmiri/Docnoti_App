@@ -1,29 +1,29 @@
-import { Link } from 'expo-router';
-import { StyleSheet } from 'react-native';
+import React from "react";
+import { Modal, View, Text, Button, StyleSheet } from "react-native";
 
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
+type Props = {
+  visible: boolean;
+  message: string;
+  onClose: () => void;
+};
 
-export default function ModalScreen() {
+const GlobalModal = ({ visible, message, onClose }: Props) => {
   return (
-    <ThemedView style={styles.container}>
-      <ThemedText type="title">This is a modal</ThemedText>
-      <Link href="/" dismissTo style={styles.link}>
-        <ThemedText type="link">Go to home screen</ThemedText>
-      </Link>
-    </ThemedView>
+    <Modal animationType="slide" transparent visible={visible}>
+      <View style={styles.container}>
+        <View style={styles.modal}>
+          <Text style={styles.message}>{message}</Text>
+          <Button title="Close" onPress={onClose} color="#007BFF" />
+        </View>
+      </View>
+    </Modal>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-  },
-  link: {
-    marginTop: 15,
-    paddingVertical: 15,
-  },
+  container: { flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "rgba(0,0,0,0.5)" },
+  modal: { width: 300, padding: 20, backgroundColor: "#FFF", borderRadius: 10, alignItems: "center" },
+  message: { marginBottom: 20, fontSize: 16, textAlign: "center" },
 });
+
+export default GlobalModal;
